@@ -27,9 +27,8 @@ class SynchronizeOrder implements ShouldQueue, ShouldBeUnique
         if (($status = $result->getStatus()) && $status != $this->order->status) {
             $this->order->status = $status;
         }
-        // TODO type subject to change?
         if (($type = $result->getType()) && $type != $this->order->type) {
-            $this->order->status = $type;
+            $this->order->type = $type;
         }
         $this->order->updated_at = Carbon::now();
         $this->order->saveOrFail();
