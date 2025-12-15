@@ -12,9 +12,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
 
-class DeleteOrder implements ShouldQueue, ShouldBeUnique
+class DeleteOrder implements ShouldBeUnique, ShouldQueue
 {
-    use Queueable, DefaultConfig, UniqueForOrder;
+    use DefaultConfig, Queueable, UniqueForOrder;
 
     public function __construct(public Order $order)
     {

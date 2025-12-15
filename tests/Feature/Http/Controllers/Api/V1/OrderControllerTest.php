@@ -223,7 +223,6 @@ it('rejects invalid create payloads', function (array $payload, array $errors) {
     ],
 ]);
 
-
 test('delete', function () {
     Sanctum::actingAs(User::factory()->create());
 
@@ -245,4 +244,3 @@ it('rejects to delete uncompleted orders', function () {
 
     Queue::assertNothingPushed();
 });
-

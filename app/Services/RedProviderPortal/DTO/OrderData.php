@@ -12,11 +12,10 @@ class OrderData
         public readonly string $id,
         public readonly ?string $type,
         public readonly ?string $status,
-    ) {
-    }
+    ) {}
 
     /**
-     * @param array<string, string> $payload
+     * @param  array<string, string>  $payload
      */
     public static function fromArray(array $payload): self
     {
@@ -32,7 +31,7 @@ class OrderData
     }
 
     /**
-     * @param array<int, array<string, string>> $payload
+     * @param  array<int, array<string, string>>  $payload
      * @return self[]
      */
     public static function fromList(array $payload): array

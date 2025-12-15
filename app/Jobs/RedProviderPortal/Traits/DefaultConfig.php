@@ -27,4 +27,3 @@ trait DefaultConfig
         return Carbon::now()->plus(minutes: 60);
     }
 }
-

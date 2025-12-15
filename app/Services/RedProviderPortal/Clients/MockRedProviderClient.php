@@ -13,7 +13,7 @@ class MockRedProviderClient implements RedProviderClient
     public function listOrders(): array
     {
         $orders = [];
-        for ($i=0; $i < rand(1, 20); $i++) {
+        for ($i = 0; $i < rand(1, 20); $i++) {
             $orders[] = [
                 'id' => fake()->uuid(),
                 'type' => (fake()->randomElement(Type::cases()))->value,
@@ -21,6 +21,7 @@ class MockRedProviderClient implements RedProviderClient
                 'created_at' => CarbonImmutable::now()->toIso8601String(),
             ];
         }
+
         return OrderData::fromList($orders);
     }
 
@@ -42,7 +43,7 @@ class MockRedProviderClient implements RedProviderClient
             'status' => (fake()->randomElement(Status::cases()))->value,
             'created_at' => CarbonImmutable::now()->toIso8601String(),
         ]);
-}
+    }
 
     public function deleteOrder(string $id): void
     {

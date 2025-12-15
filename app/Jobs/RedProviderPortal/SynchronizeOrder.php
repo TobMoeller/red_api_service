@@ -12,9 +12,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Carbon;
 
-class SynchronizeOrder implements ShouldQueue, ShouldBeUnique
+class SynchronizeOrder implements ShouldBeUnique, ShouldQueue
 {
-    use Queueable, DefaultConfig, UniqueForOrder;
+    use DefaultConfig, Queueable, UniqueForOrder;
 
     public function __construct(public Order $order)
     {

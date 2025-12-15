@@ -11,9 +11,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
 
-class CreateOrder implements ShouldQueue, ShouldBeUnique
+class CreateOrder implements ShouldBeUnique, ShouldQueue
 {
-    use Queueable, DefaultConfig, UniqueForOrder;
+    use DefaultConfig, Queueable, UniqueForOrder;
 
     public function __construct(public Order $order)
     {

@@ -25,8 +25,7 @@ class HttpRedProviderClient implements RedProviderClient
         protected string $clientId,
         protected string $clientSecret,
         protected ?string $certPath,
-    ) {
-    }
+    ) {}
 
     /**
      * @return OrderData[]
@@ -86,7 +85,7 @@ class HttpRedProviderClient implements RedProviderClient
 
     protected function getAccessToken(): AccessToken
     {
-        if ($this->accessToken && !$this->accessToken->isExpired()) {
+        if ($this->accessToken && ! $this->accessToken->isExpired()) {
             return $this->accessToken;
         }
 
@@ -105,9 +104,9 @@ class HttpRedProviderClient implements RedProviderClient
 
         if ($response->failed()
             || empty($ttl = $response->json('ttl'))
-            || !is_int($ttl)
+            || ! is_int($ttl)
             || empty($token = $response->json('access_token'))
-            || !is_string($token)
+            || ! is_string($token)
         ) {
             Log::error(self::class.':Failed to retrieve Access Token', ['response' => $response]);
 

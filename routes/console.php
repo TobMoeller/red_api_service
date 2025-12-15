@@ -16,5 +16,4 @@ Schedule::call(fn () => app(QueryOrderUpdates::class)->handle())
     ->when(Config::get('services.red_provider_portal.poll_order_updates', false))
     ->everyMinute();
 
-
 // TODO implement polling of not completed red provider portal orders

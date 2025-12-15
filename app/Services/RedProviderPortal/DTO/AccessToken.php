@@ -9,8 +9,7 @@ class AccessToken
     public function __construct(
         public string $token,
         public Carbon $expiresAt,
-    ) {
-    }
+    ) {}
 
     public function isExpired(): bool
     {

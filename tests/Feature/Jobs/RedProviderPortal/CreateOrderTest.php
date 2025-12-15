@@ -21,4 +21,3 @@ it('creates an order', function () {
         ->type->toBe($dto->getType())
         ->status->toBe($dto->getStatus());
 });
-

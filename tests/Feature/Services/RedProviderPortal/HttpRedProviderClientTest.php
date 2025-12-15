@@ -3,7 +3,6 @@
 use App\Enums\Order\Status;
 use App\Enums\Order\Type;
 use App\Services\RedProviderPortal\Clients\HttpRedProviderClient;
-use App\Services\RedProviderPortal\Contracts\RedProviderClient;
 use App\Services\RedProviderPortal\DTO\AccessToken;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -153,4 +152,3 @@ it('deletes an order remotely', function () {
             && $request->url() === 'https://example.test/api/v1/order/abc';
     });
 });
-

@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Enums\Api\V1\Orders\SortOrders;
-use App\Http\Requests\Api\V1\Orders\IndexRequest;
-use App\Http\Resources\Api\V1\OrderResource;
 use App\Enums\Order\Status;
 use App\Enums\Order\Type;
+use App\Http\Requests\Api\V1\Orders\IndexRequest;
+use App\Http\Resources\Api\V1\OrderResource;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\UseResource;

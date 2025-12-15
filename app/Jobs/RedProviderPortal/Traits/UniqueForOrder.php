@@ -12,4 +12,3 @@ trait UniqueForOrder
         return (string) $this->order->id;
     }
 }
-
