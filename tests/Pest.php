@@ -11,9 +11,16 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+use App\Enums\Order\Status;
+use App\Enums\Order\Type;
+use App\Services\RedProviderPortal\DTO\OrderData;
+
+uses(Tests\TestCase::class)
+    ->use(Illuminate\Foundation\Testing\LazilyRefreshDatabase::class)
+    ->afterEach(function () {
+        Illuminate\Support\Carbon::setTestNow();
+    })
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +48,14 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
+function createOrderDTO(
+    ?string $id = null,
+    ?Type $type = null,
+    ?Status $status = null,
+): OrderData {
+    return new OrderData(
+        $id ?? fake()->uuid(),
+        ($type ?? fake()->randomElement(Type::cases()))->value,
+        ($status ?? fake()->randomElement(Status::cases()))->value,
+    );
 }
