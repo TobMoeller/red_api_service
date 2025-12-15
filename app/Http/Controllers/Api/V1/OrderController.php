@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Orders\IndexRequest;
 use App\Http\Requests\Api\V1\Orders\StoreRequest;
 use App\Models\Order;
-use App\Order\Status;
+use App\Enums\Order\Status;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Gate;

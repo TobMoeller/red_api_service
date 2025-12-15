@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Order\Status;
-use App\Order\Type;
+use App\Enums\Order\Status;
+use App\Enums\Order\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

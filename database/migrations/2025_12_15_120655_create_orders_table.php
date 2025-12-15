@@ -1,6 +1,6 @@
 <?php
 
-use App\Order\Status;
+use App\Enums\Order\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
