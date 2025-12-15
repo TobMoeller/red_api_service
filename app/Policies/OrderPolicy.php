@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Order;
 use App\Models\User;
-use App\Order\Status;
 
 class OrderPolicy
 {
@@ -32,6 +31,7 @@ class OrderPolicy
 
     public function delete(User $user, Order $order): bool
     {
-        return $order->status == Status::COMPLETED;
+        return true; // TODO check if it is the order of the user?
+
     }
 }
