@@ -23,7 +23,7 @@ class HttpRedProviderClient implements RedProviderClient
         protected string $baseUrl,
         protected string $clientId,
         protected string $clientSecret,
-        protected string $certPath,
+        protected ?string $certPath,
     ) {
     }
 
@@ -74,9 +74,13 @@ class HttpRedProviderClient implements RedProviderClient
     protected function baseRequest(): PendingRequest
     {
         return Http::baseUrl($this->baseUrl)
-            ->withOptions([
-                'verify' => $this->certPath,
-            ]);
+            ->when(
+                empty($this->certPath),
+                fn (PendingRequest $request) => $request->withoutVerifying(),
+                fn (PendingRequest $request) => $request->withOptions([
+                    'verify' => $this->certPath,
+                ])
+            );
     }
 
     protected function getAccessToken(): AccessToken

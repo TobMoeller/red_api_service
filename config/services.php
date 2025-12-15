@@ -42,6 +42,7 @@ return [
         'client_secret' => env('RED_PROVIDER_PORTAL_CLIENT_SECRET', '=work@red'),
 
         'cert_path' => env('RED_PROVIDER_PORTAL_CERT_PATH', base_path('ssl_cert.pem')),
+        'without_verifying' => filter_var(env('RED_PROVIDER_PORTAL_WITHOUT_VERIFYING', false), FILTER_VALIDATE_BOOL),
 
         'use_mock' => filter_var(env('RED_PROVIDER_PORTAL_USE_MOCK', true), FILTER_VALIDATE_BOOL),
     ],

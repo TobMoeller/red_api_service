@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
                 if (empty($config['base_url'])
                     || empty($config['client_id'])
                     || empty($config['client_secret'])
-                    || empty($config['cert_path'])
+                    || (empty($config['cert_path']) && ($config['without_verifying'] ?? false))
                 ) {
                     Log::debug('Invalid RED Provider Portal Config', ['config' => $config]);
                     throw Exception('Invalid RED Provider Portal Config');
@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
                     $config['base_url'],
                     $config['client_id'],
                     $config['client_secret'],
-                    $config['cert_path'],
+                    ($config['without_verifying'] ?? false) ? null : $config['cert_path'],
                 );
             }
         );
