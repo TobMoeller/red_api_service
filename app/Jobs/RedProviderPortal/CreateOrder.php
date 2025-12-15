@@ -2,37 +2,16 @@
 
 namespace App\Jobs\RedProviderPortal;
 
-use App\Enums\Order\Status;
+use App\Jobs\RedProviderPortal\Traits\DefaultConfig;
 use App\Models\Order;
 use App\Services\RedProviderPortal\Contracts\RedProviderClient;
-use DateTime;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
 
 class CreateOrder implements ShouldQueue
 {
-    use Queueable;
-
-    /**
-     * TODO handle final job failure
-     *
-     * @var int
-     */
-    public $maxExceptions = 3;
-
-    /**
-     * @return array<int, int>
-     */
-    public function backoff(): array
-    {
-        return [1, 10, 60];
-    }
-
-    public function retryUntil(): DateTime
-    {
-        return now()->plus(minutes: 60);
-    }
+    use Queueable, DefaultConfig;
 
     public function __construct(public Order $order)
     {
@@ -42,9 +21,16 @@ class CreateOrder implements ShouldQueue
     public function handle(RedProviderClient $apiClient): void
     {
         DB::transaction(function () use ($apiClient) {
-            $this->order->status = Status::PROCESSING;
+            $data = $apiClient->createOrder($this->order->type);
+
+            if ($status = $data->getStatus()) {
+                $this->order->status = $status;
+            }
+            if ($type = $data->getType()) {
+                $this->order->type = $type;
+            }
+            $this->order->red_provider_portal_id = $data->id;
             $this->order->saveOrFail();
-            $apiClient->createOrder($this->order->type);
         });
     }
 }
