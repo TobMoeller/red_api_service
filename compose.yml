@@ -7,7 +7,34 @@ services:
       - .:/var/www/html
     environment:
       DB_HOST: db
-      MAIL_HOST: mailpit
+      REDIS_HOST: redis
+      RED_PROVIDER_PORTAL_BASE_URL: "https://redproviderportal:3000"
+    depends_on:
+      - db
+      - redis
+
+  horizon:
+    image: serversideup/php:8.4-cli
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    command: ["php", "/var/www/html/artisan", "horizon"]
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
+      RED_PROVIDER_PORTAL_BASE_URL: "https://redproviderportal:3000"
+    depends_on:
+      - db
+      - redis
+
+  scheduler:
+    image: serversideup/php:8.4-cli
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    command: ["php", "/var/www/html/artisan", "schedule:work"]
+    environment:
+      DB_HOST: db
       REDIS_HOST: redis
       RED_PROVIDER_PORTAL_BASE_URL: "https://redproviderportal:3000"
     depends_on:
@@ -28,27 +55,20 @@ services:
       - db_data:/var/lib/mysql
 
   redis:
-    image: redis:alpine
+    image: redis:8-alpine
+    ports:
+      - 6379:6379
     volumes:
       - redis_data:/data
 
-  mailpit:
-    image: axllent/mailpit:latest
-    ports:
-      - 1025:1025
-      - 8025:8025
-
   redproviderportal:
-    image: node:22-alpine
+    image: node:24-alpine
     working_dir: /app
     command: node ./redproviderportal.js
     ports:
       - 3000:3000
     volumes:
       - ./RedProviderPortal:/app
-    # environment:
-    #   PORT: 3000
-    # # Replace with a named network or TLS configuration as needed for your host/Postman
 
 volumes:
   db_data:
