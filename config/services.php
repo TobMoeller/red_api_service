@@ -45,6 +45,8 @@ return [
         'without_verifying' => filter_var(env('RED_PROVIDER_PORTAL_WITHOUT_VERIFYING', false), FILTER_VALIDATE_BOOL),
 
         'use_mock' => filter_var(env('RED_PROVIDER_PORTAL_USE_MOCK', true), FILTER_VALIDATE_BOOL),
+
+        'poll_order_updates' => filter_var(env('RED_PROVIDER_PORTAL_POLL_ORDER_UPDATES', false), FILTER_VALIDATE_BOOL),
     ],
 
 ];
