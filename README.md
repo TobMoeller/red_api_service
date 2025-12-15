@@ -1,3 +1,12 @@
+## Schnellstart (mit Docker Compose)
+
+1. `.env` erzeugen: `cp .env.compose .env`
+2. Container starten: `docker compose up -d`
+3. Dependencies installieren: `docker compose exec php compose install`
+4. App-Key setzen: `docker compose exec php php artisan key:generate`
+5. Datenbank füllen: `docker compose exec php php artisan migrate:fresh --seed`
+6. API nutzen: `http://localhost:8000` (Bearer-Token `test` für Requests verwenden).
+
 # Bewerberaufgabe
 
 Herzlichen Glückwunsch, Du erhältst heute unsere Coding Challenge! Weiter unten findest Du die Aufgaben-Stellung.
