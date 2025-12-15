@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'red_provider_portal' => [
+        'base_url' => env('RED_PROVIDER_PORTAL_BASE_URL', 'https://localhost:3000'),
+
+        'client_id' => env('RED_PROVIDER_PORTAL_CLIENT_ID', 'Fun'),
+        'client_secret' => env('RED_PROVIDER_PORTAL_CLIENT_SECRET', '=work@red'),
+
+        'cert_path' => env('RED_PROVIDER_PORTAL_CERT_PATH', base_path('ssl_cert.pem')),
+
+        'use_mock' => filter_var(env('RED_PROVIDER_PORTAL_USE_MOCK', true), FILTER_VALIDATE_BOOL),
+    ],
+
 ];
