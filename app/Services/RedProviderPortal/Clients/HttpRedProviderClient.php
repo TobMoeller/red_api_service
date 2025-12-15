@@ -114,6 +114,11 @@ class HttpRedProviderClient implements RedProviderClient
 
         $expiresAt = Carbon::now()->addSeconds($ttl);
 
+        // add safety margin
+        if ($expiresAt->gt(Carbon::now()->addSeconds(20))) {
+            $expiresAt = $expiresAt->subSeconds(10);
+        }
+
         $this->accessToken = new AccessToken($token, $expiresAt);
 
         Cache::put(self::ACCESS_TOKEN_CACHE_KEY, $this->accessToken, $expiresAt->clone()->subSeconds(5));
