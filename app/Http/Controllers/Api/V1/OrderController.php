@@ -8,6 +8,7 @@ use App\Http\Requests\Api\V1\Orders\StoreRequest;
 use App\Models\Order;
 use App\Enums\Order\Status;
 use App\Jobs\RedProviderPortal\CreateOrder;
+use App\Jobs\RedProviderPortal\DeleteOrder;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,7 @@ class OrderController extends Controller
             throw ValidationException::withMessages(['status' => __('Order can only be deleted when status is completed.')]);
         }
 
-        $order->deleteOrFail();
+        DeleteOrder::dispatch($order);
 
         return Response::noContent();
     }
