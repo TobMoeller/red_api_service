@@ -64,6 +64,7 @@ class OrderController extends Controller
             throw ValidationException::withMessages(['status' => __('Order can only be deleted when status is completed.')]);
         }
 
+        // TODO add dedicated "to delete" status?
         DeleteOrder::dispatch($order);
 
         return Response::noContent();
