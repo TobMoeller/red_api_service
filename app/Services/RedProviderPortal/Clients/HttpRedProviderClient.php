@@ -19,6 +19,7 @@ class HttpRedProviderClient implements RedProviderClient
 
     protected ?AccessToken $accessToken = null;
 
+    // TODO rate limit API calls?
     public function __construct(
         protected string $baseUrl,
         protected string $clientId,
