@@ -6,6 +6,7 @@ use App\Jobs\RedProviderPortal\Traits\DefaultConfig;
 use App\Jobs\RedProviderPortal\Traits\UniqueForOrder;
 use App\Models\Order;
 use App\Services\RedProviderPortal\Contracts\RedProviderClient;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -22,9 +23,13 @@ class DeleteOrder implements ShouldQueue, ShouldBeUnique
 
     public function handle(RedProviderClient $apiClient): void
     {
-        DB::transaction(function () use ($apiClient) {
+        if (empty($providerId = $this->order->red_provider_portal_id)) {
+            throw new Exception('Missing RED Provider Portal ID');
+        }
+
+        DB::transaction(function () use ($apiClient, $providerId) {
             $this->order->deleteOrFail();
-            $apiClient->deleteOrder($this->order->red_provider_portal_id);
+            $apiClient->deleteOrder($providerId);
         });
     }
 }

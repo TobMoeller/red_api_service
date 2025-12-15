@@ -37,7 +37,7 @@ class HttpRedProviderClient implements RedProviderClient
             ->get('/api/v1/orders')
             ->throw();
 
-        return OrderData::fromList($response->json());
+        return OrderData::fromList($response->json()); // @phpstan-ignore argument.type
     }
 
     public function createOrder(Type $type): OrderData
@@ -46,7 +46,7 @@ class HttpRedProviderClient implements RedProviderClient
             ->post('/api/v1/orders', ['type' => $type->value])
             ->throw();
 
-        return OrderData::fromArray($response->json());
+        return OrderData::fromArray($response->json()); // @phpstan-ignore argument.type
     }
 
     public function getOrder(string $id): OrderData
@@ -55,7 +55,7 @@ class HttpRedProviderClient implements RedProviderClient
             ->get('/api/v1/order/'.$id)
             ->throw();
 
-        return OrderData::fromArray($response->json());
+        return OrderData::fromArray($response->json()); // @phpstan-ignore argument.type
     }
 
     public function deleteOrder(string $id): void
@@ -104,8 +104,10 @@ class HttpRedProviderClient implements RedProviderClient
             ]);
 
         if ($response->failed()
-            || empty($ttl = (int) $response->json('ttl'))
+            || empty($ttl = $response->json('ttl'))
+            || !is_int($ttl)
             || empty($token = $response->json('access_token'))
+            || !is_string($token)
         ) {
             Log::error(self::class.':Failed to retrieve Access Token', ['response' => $response]);
 

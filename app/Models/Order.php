@@ -22,13 +22,10 @@ class Order extends Model
 
     public $guarded = [];
 
-    protected function casts(): array
-    {
-        return [
-            'type' => Type::class,
-            'status' => Status::class,
-        ];
-    }
+    protected $casts = [
+        'type' => Type::class,
+        'status' => Status::class,
+    ];
 
     #[Scope]
     protected function apiFilter(Builder $query, IndexRequest $request): void
@@ -39,7 +36,7 @@ class Order extends Model
                 fn (Builder $query) => $query->where('name', 'like', '%'.$name.'%'),
             )
             ->when(
-                ($sort = $request->validated('sort')) && $sort = SortOrders::tryFrom($sort),
+                ($sort = $request->validated('sort')) && ($sort = SortOrders::tryFrom($sort)),
                 fn (Builder $query) => $query->customOrder($sort),
             );
     }

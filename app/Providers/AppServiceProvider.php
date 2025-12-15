@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\RedProviderPortal\Clients\HttpRedProviderClient;
 use App\Services\RedProviderPortal\Clients\MockRedProviderClient;
 use App\Services\RedProviderPortal\Contracts\RedProviderClient;
+use Exception;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -19,15 +20,17 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             RedProviderClient::class,
             function (): RedProviderClient {
+                /** @var array<string, mixed> */
                 $config = Config::get('services.red_provider_portal', []);
 
-                if (empty($config['base_url'])
-                    || empty($config['client_id'])
-                    || empty($config['client_secret'])
+                if (empty($config['base_url']) || !is_string($config['base_url'])
+                    || empty($config['client_id']) || !is_string($config['client_id'])
+                    || empty($config['client_secret']) || !is_string($config['client_secret'])
                     || (empty($config['cert_path']) && ($config['without_verifying'] ?? false))
+                    || !is_string($config['cert_path'])
                 ) {
                     Log::debug('Invalid RED Provider Portal Config', ['config' => $config]);
-                    throw Exception('Invalid RED Provider Portal Config');
+                    throw new Exception('Invalid RED Provider Portal Config');
                 }
 
                 if ($config['use_mock'] ?? false) {

@@ -15,6 +15,9 @@ class OrderData
     ) {
     }
 
+    /**
+     * @param array<string, string> $payload
+     */
     public static function fromArray(array $payload): self
     {
         if (empty($id = $payload['id'])) {
@@ -23,13 +26,14 @@ class OrderData
 
         return new self(
             (string) $id,
-            isset($payload['type']) ? (string) $payload['type'] : null,
-            isset($payload['status']) ? (string) $payload['status'] : null,
+            isset($payload['type']) ? strval($payload['type']) : null,
+            isset($payload['status']) ? strval($payload['status']) : null,
         );
     }
 
     /**
-     * @param array<int, array<string, mixed>> $payload
+     * @param array<int, array<string, string>> $payload
+     * @return self[]
      */
     public static function fromList(array $payload): array
     {
@@ -38,11 +42,11 @@ class OrderData
 
     public function getStatus(): ?Status
     {
-        return Status::tryFrom($this->status);
+        return $this->status ? Status::tryFrom($this->status) : null;
     }
 
     public function getType(): ?Type
     {
-        return Type::tryFrom($this->type);
+        return $this->type ? Type::tryFrom($this->type) : null;
     }
 }

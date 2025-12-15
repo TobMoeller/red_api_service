@@ -9,7 +9,7 @@ trait UniqueForOrder
 
     public function uniqueId(): string
     {
-        return $this->order->id;
+        return (string) $this->order->id;
     }
 }
 
